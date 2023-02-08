@@ -1,51 +1,36 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Manager from '../Manager'; // file app cũ
-import About from './About'
-import Manage_extra from './Manage_extra';
+import EditProfile from './EditProfile'
+import Profile from './Profile';
 import { View,Text, Button,Image,StyleSheet} from "react-native";
+import React ,{useState} from "react";
 
 const Stack = createNativeStackNavigator();
-const list = [
-    {
-        id: 1,
-        name: 'Nguyễn A',
-        msv: 'PH99999',
-    },
-    {
-        id: 2,
-        name: 'Nguyễn B',
-        msv: 'PH12345'
-    },
-    {
-        id: 3,
-        name: 'Nguyễn C',
-        msv: 'PH11111'
-    },
-]
+
 // Tạo ra thêm 1 màn hình About để quản lý
 const Home = (props) =>{
+    const [name, setName] = useState("Đinh Trọng Hào");
+    const [age, setAge] = useState("21");
+    const [address, setAddress] = useState("Hà Nội");
+    const [phone, setPhone] = useState("0999999999");
+    const [Email, setEmail] = useState("hao@gmail.com");
+    const Update = (name, age, address, phone, Email) => {
+    setName(name);
+    setAge(age);
+    setAddress(address);
+    setPhone(phone);
+    setEmail(Email);
+    };
     const nav = props.navigation;
    return (<View>
-        <Image
-            style={{ width: 90, height: 90 ,borderRadius: 100, backgroundColor: "grey", justifyContent: "center", alignSelf: 'center'}}
-            source={{ uri: 'https://tse1.mm.bing.net/th?id=OIP.u-H2-2_iEVauQyoG745pUQHaHa&pid=Api&rs=1&c=1&qlt=95&w=110&h=110' }}
-          />
         <View style={styles.viewbt}>
              <Button 
-                title="Quản lý"
+                title="Thông tin cá nhân"
                 onPress={() => nav.navigate(
-                    'Manage_extra',
-                    {data: list},
+                    'Profile',
+                    {name: name, age: age, address: address, phone: phone, Email: Email, Update: Update}
                     )}
              />
-             <Button 
-                title="About"
-                onPress={() => nav.navigate(
-                    'About',
-                    {nameAbout: 'Đinh Trọng Hào', msvAbout: 'PH27524'},
-                    )}
-            />
         </View>
        
     </View>);
@@ -55,10 +40,10 @@ const App = () => {
     <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
             <Stack.Screen
-                name= "Manage_extra" component={Manage_extra}
+                name= "Profile" component={Profile}
             />
              <Stack.Screen
-                name='About' component={About}
+                name='EditProfile' component={EditProfile}
             />
             <Stack.Screen
                 name='Home' component={Home}
